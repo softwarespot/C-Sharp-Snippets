@@ -81,6 +81,26 @@ namespace CustomMethod
         }
 
         /// <summary>
+        /// Checks if a byte is true when the value is non-zero. (Like in most languages.)
+        /// </summary>
+        /// <param name="b">A byte value.</param>
+        /// <returns>True or False</returns>
+        public static bool IsTrue(this byte b)
+        {
+            return b != 0;
+        }
+
+        /// <summary>
+        /// Checks if a double is true when the value is non-zero. (Like in most languages.)
+        /// </summary>
+        /// <param name="d">A double value.</param>
+        /// <returns>True or False</returns>
+        public static bool IsTrue(this double d)
+        {
+            return d != 0;
+        }
+
+        /// <summary>
         /// Checks if an integer is true when the value is non-zero. (Like in most languages.)
         /// </summary>
         /// <param name="i">An integer value.</param>
