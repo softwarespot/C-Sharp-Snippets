@@ -81,7 +81,7 @@ namespace CustomMethod
         }
 
         /// <summary>
-        /// Checks if a byte is true when the value is non-zero. (Like in most languages.)
+        /// Checks if a byte value is true when non-zero. (Like in most languages.)
         /// </summary>
         /// <param name="b">A byte value.</param>
         /// <returns>True or False</returns>
@@ -91,7 +91,7 @@ namespace CustomMethod
         }
 
         /// <summary>
-        /// Checks if a double is true when the value is non-zero. (Like in most languages.)
+        /// Checks if a double value is true when non-zero. (Like in most languages.)
         /// </summary>
         /// <param name="d">A double value.</param>
         /// <returns>True or False</returns>
@@ -101,7 +101,7 @@ namespace CustomMethod
         }
 
         /// <summary>
-        /// Checks if an integer is true when the value is non-zero. (Like in most languages.)
+        /// Checks if an integer value is true when non-zero. (Like in most languages.)
         /// </summary>
         /// <param name="i">An integer value.</param>
         /// <returns>True or False</returns>
