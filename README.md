@@ -1,3 +1,3 @@
 C-Sharp-Snippets
 ================
-C-Sharp related snippets and examples.
+C-Sharp related Snippets and Examples.
