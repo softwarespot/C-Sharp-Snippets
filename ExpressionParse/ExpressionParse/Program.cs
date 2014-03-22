@@ -21,7 +21,7 @@ namespace ExpressionParse
                 {
                     Console.WriteLine("{0} = an integer", value);
                 }
-                else if (value == '=') // The following  conditions check if the char value is a valid symbol.
+                else if (value == '=') // The following conditions check if the char value is a valid symbol.
                 {
                     Console.WriteLine("{0} = the equals (=) symbol", value);
                 }
@@ -40,6 +40,10 @@ namespace ExpressionParse
                 else if (value == '/')
                 {
                     Console.WriteLine("{0} = the division (/) symbol", value);
+                }
+                else if (value == '^')
+                {
+                    Console.WriteLine("{0} = the power of (^) symbol", value);
                 }
             }
 
