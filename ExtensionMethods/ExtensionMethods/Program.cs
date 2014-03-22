@@ -38,7 +38,7 @@ namespace CustomMethod
         /// <returns>True or False</returns>
         public static bool IsEven(this double d)
         {
-            return d % 2 == 0;
+            return Math.Round(d) % 2 == 0;
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace CustomMethod
         /// <returns>True or False</returns>
         public static bool IsOdd(this double d)
         {
-            return d % 2 == 1;
+            return Math.Round(d) % 2 == 1;
         }
 
         /// <summary>
@@ -244,6 +244,9 @@ namespace Example
 
             string myString = string.Empty;
             Console.WriteLine(myString.IsTrue());
+
+            double myOdd = 2.21;
+            Console.WriteLine(myOdd.IsEven());
 
             Console.Write("Press any key to continue . . . ");
             Console.ReadKey(true);
