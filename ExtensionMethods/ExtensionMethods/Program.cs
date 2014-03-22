@@ -32,6 +32,16 @@ namespace CustomMethod
         }
 
         /// <summary>
+        /// Checks whether a double is an even value.
+        /// </summary>
+        /// <param name="d">A double value.</param>
+        /// <returns>True or False</returns>
+        public static bool IsEven(this double d)
+        {
+            return d % 2 == 0;
+        }
+
+        /// <summary>
         /// Checks whether an integer is an even value.
         /// </summary>
         /// <param name="i">An integer value.</param>
@@ -68,6 +78,16 @@ namespace CustomMethod
                     return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// Checks if a double is an odd value.
+        /// </summary>
+        /// <param name="d">A double value.</param>
+        /// <returns>True or False</returns>
+        public static bool IsOdd(this double d)
+        {
+            return d % 2 == 1;
         }
 
         /// <summary>
