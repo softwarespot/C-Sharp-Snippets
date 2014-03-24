@@ -9,7 +9,7 @@ namespace while_loop_efficent
             // Print all numbers between 0 and 20.
 
             // Old way with 3 lines ( minus Console.WriteLine() and brackets ({}). )....
-            sbyte counter = 0; // Create a counter from 0.
+            byte counter = 0; // Create a counter from 0.
             while (counter <= 20) // Check if the counter is less than or equal to 20.
             {
                 Console.Write(counter + ((counter != 20) ? "," : ".")); // Formatting commas and period only.
