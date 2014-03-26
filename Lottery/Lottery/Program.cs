@@ -23,7 +23,7 @@ namespace Lottery
                 /* Note: This was the design plan I came up with when I implemented the Lottery game.
                 * - Ask a user for lottery numbers e.g. 1,20,21,45 or 1 2 20 and between 1 and 49.
                 * - Replace spaces and/or commas to commas only. Values can also be delimited by . or -.
-                * - Replace non-digits with zero.
+                * - Replace non-digits with zero, so int.Parse() doesn't fail dramatically.
                 * - Sort user ints.
                 * - Check for duplicates in user integers.
                 * - Create a random generated set of integers and sort the computer's choice.
@@ -42,7 +42,7 @@ namespace Lottery
                 // Find similar matches between both arrays: http://www.dotnetperls.com/intersect.
 
                 // If the sort array does not have 7 elements OR the value is less than 1 OR the value is greater than 49 OR duplicate value exists, the FAIL, otherwise check if both int arrays are equal. // RegExp v2: (\d+),\1(?=,|$)
-                Console.WriteLine((userArray.Length != 7 || Array.FindAll(userArray, element => element < 1 || element > 49).Length != 0 || Regex.IsMatch(string.Join(",", userArray), @"(\d+),\b\1\b")) ? "The values passed were incorrectly formatted and/or not between 1 and 49. Please try again.\n\n" : "User Lottery = " + string.Join(",", userArray) + "\nComputer Lottery = " + string.Join(",", computerArray) + "\n\nThe outcome was " + ((userArray.OrderBy(element => element).SequenceEqual(computerArray.OrderBy(element => element))) ? "you won! Congratulations.\n\n" : "you lost! " + ((userArray.Intersect(computerArray).ToArray().Count() > 0) ? "But you had " + ((userArray.Intersect(computerArray).ToArray().Count() == 1) ? userArray.Intersect(computerArray).ToArray().Count() + " match.\n\n" : userArray.Intersect(computerArray).ToArray().Count() + " matches.\n\n") : " Please try again.\n\n")));
+                Console.WriteLine((userArray.Length != 7 || Array.FindAll(userArray, element => element < 1 || element > 49).Length != 0 || Regex.IsMatch(string.Join(",", userArray.OrderBy(element => element)), @"(\d+),\b\1\b")) ? "The values passed were incorrectly formatted and/or not between 1 and 49. Please try again.\n\n" : "User Lottery = " + string.Join(",", userArray.OrderBy(element => element)) + "\nComputer Lottery = " + string.Join(",", computerArray.OrderBy(element => element)) + "\n\nThe outcome was " + ((userArray.OrderBy(element => element).SequenceEqual(computerArray.OrderBy(element => element))) ? "you won! Congratulations.\n\n" : "you lost the jackpot!" + ((userArray.Intersect(computerArray).ToArray().Count() > 0) ? " But you had " + ((userArray.Intersect(computerArray).ToArray().Count() == 1) ? userArray.Intersect(computerArray).ToArray().Count() + " match " : userArray.Intersect(computerArray).ToArray().Count() + " matches ") + ((userArray.Intersect(computerArray).ToArray().Count() < 4) ? "and no win this time." : (userArray.Intersect(computerArray).ToArray().Count() == 4) ? "and won 400e." : (userArray.Intersect(computerArray).ToArray().Count() == 5) ? "and won 2300e." : (userArray.Intersect(computerArray).ToArray().Count() == 6) ? "and won 22000e." : "") : " Please try again.\n\n")));
             }
         }
     }
