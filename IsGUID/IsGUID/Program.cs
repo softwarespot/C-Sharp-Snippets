@@ -13,25 +13,25 @@ namespace IsGUID
         private static void Main()
         {
             // Checks if a GUID contains <8 hex values>-<4 hex values>-<4 hex values>-<4 hex values>-<12 hex values> with optional brackets.
-            string guid = string.Empty;
+            string guidValue = string.Empty;
 
-            guid = "{DDBA58F7-8A63-48F1-9641-F550A60AEDD3}"; // This is valid.
-            Console.WriteLine("Is the GUID: {0}, a valid GUID?\r\nReturn: {1}", guid, IsGUID(guid));
-
-            Console.WriteLine(""); // Write a new line.
-
-            guid = "{4C425BDE-8D9A-466C-B252-AC74F6F0EFBF}"; // This is valid.
-            Console.WriteLine("Is the GUID: {0}, a valid GUID?\r\nReturn: {1}", guid, IsGUID(guid));
+            guidValue = Guid.NewGuid().ToString(); // This is valid.
+            Console.WriteLine("Is the GUID: {0}, a valid GUID?\r\nReturn: {1}", guidValue, IsGUID(guidValue));
 
             Console.WriteLine(""); // Write a new line.
 
-            guid = "{4C425BDE-8D9A-466C-B252-AC74F6F0E}"; // This is invalid.
-            Console.WriteLine("Is the GUID: {0}, a valid GUID?\r\nReturn: {1}", guid, IsGUID(guid));
+            guidValue = "{4C425BDE-8D9A-466C-B252-AC74F6F0EFBF}"; // This is valid.
+            Console.WriteLine("Is the GUID: {0}, a valid GUID?\r\nReturn: {1}", guidValue, IsGUID(guidValue));
 
             Console.WriteLine(""); // Write a new line.
 
-            guid = "4C425BDE-8D9A-466C-B252-AC74F6F0EFBF"; // This is valid with no brackets.
-            Console.WriteLine("Is the GUID: {0}, a valid GUID?\r\nReturn: {1}", guid, IsGUID(guid));
+            guidValue = "{4C425BDE-8D9A-466C-B252-AC74F6F0E}"; // This is invalid.
+            Console.WriteLine("Is the GUID: {0}, a valid GUID?\r\nReturn: {1}", guidValue, IsGUID(guidValue));
+
+            Console.WriteLine(""); // Write a new line.
+
+            guidValue = "4C425BDE-8D9A-466C-B252-AC74F6F0EFBF"; // This is valid with no brackets.
+            Console.WriteLine("Is the GUID: {0}, a valid GUID?\r\nReturn: {1}", guidValue, IsGUID(guidValue));
 
             Console.WriteLine(""); // Write a new line.
 
