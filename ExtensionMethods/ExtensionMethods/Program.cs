@@ -1,6 +1,7 @@
 ﻿using CustomMethod;
 
 using System;
+using System.Text.RegularExpressions;
 
 namespace CustomMethod
 {
@@ -98,6 +99,19 @@ namespace CustomMethod
         public static bool IsOdd(this int i)
         {
             return i % 2 == 1;
+        }
+
+        /// <summary>
+        /// Checks whether a string is a palindrome.
+        /// </summary>
+        /// <param name="s">A string value.</param>
+        /// <returns>True or False</returns>
+        public static bool IsPalindrome(this string s)
+        {
+            s = Regex.Replace(s, @"\W", "").ToLower(); // Remove all non-word characters and convert to lowercase.
+            char[] c = s.ToCharArray();
+            Array.Reverse(c);
+            return new string(c) == s;
         }
 
         /// <summary>
@@ -247,6 +261,8 @@ namespace Example
 
             double myOdd = 2.21;
             Console.WriteLine(myOdd.IsEven());
+
+            Console.WriteLine("A man, a plan, a canal, Panama".IsPalindrome());
 
             Console.Write("Press any key to continue . . . ");
             Console.ReadKey(true);
