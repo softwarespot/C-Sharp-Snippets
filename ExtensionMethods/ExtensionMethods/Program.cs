@@ -115,6 +115,26 @@ namespace CustomMethod
         }
 
         /// <summary>
+        /// Checks if a byte value is a prime number.
+        /// </summary>
+        /// <param name="b">A byte value.</param>
+        /// <returns>True or False</returns>
+        public static bool IsPrime(this byte b) // Idea from: http://montreal.pm.org/tech/neil_kandalgaonkar.shtml
+        {
+            return Regex.IsMatch(new string('1', b), @"^(1?|(11+?)\2+)$", RegexOptions.None);
+        }
+
+        /// <summary>
+        /// Checks if an integer value is a prime number.
+        /// </summary>
+        /// <param name="i">An integer value.</param>
+        /// <returns>True or False</returns>
+        public static bool IsPrime(this int i) // Idea from: http://montreal.pm.org/tech/neil_kandalgaonkar.shtml
+        {
+            return Regex.IsMatch(new string('1', i), @"^(1?|(11+?)\2+)$", RegexOptions.None);
+        }
+
+        /// <summary>
         /// Checks if a byte value is true when non-zero. (Like in most languages.)
         /// </summary>
         /// <param name="b">A byte value.</param>
@@ -263,6 +283,9 @@ namespace Example
             Console.WriteLine(myOdd.IsEven());
 
             Console.WriteLine("A man, a plan, a canal, Panama".IsPalindrome());
+
+            int seven = 7;
+            Console.WriteLine(seven.IsPrime());
 
             Console.Write("Press any key to continue . . . ");
             Console.ReadKey(true);
