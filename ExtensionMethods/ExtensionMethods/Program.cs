@@ -88,7 +88,7 @@ namespace CustomMethod
         /// <returns>True or False</returns>
         public static bool IsOdd(this double d)
         {
-            return Math.Round(d) % 2 == 1;
+            return Math.Round(d) % 2 != 0;
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace CustomMethod
         /// <returns>True or False</returns>
         public static bool IsOdd(this int i)
         {
-            return i % 2 == 1;
+            return i % 2 != 0;
         }
 
         /// <summary>
@@ -266,8 +266,9 @@ namespace Example
 
             Console.WriteLine("Repeated string: {0}", "s".Repeat(20));
 
+            int negativeOdd = -99;
             Console.WriteLine("Is Odd: {0}", 100.IsOdd()); // Is the number odd?
-            Console.WriteLine("Is Odd: {0}", 99.IsOdd()); // Is the number odd?
+            Console.WriteLine("Is Odd: {0}", negativeOdd.IsOdd()); // Is the number odd?
             Console.WriteLine("Is Even: {0}", 99.IsEven()); // Is the number even?
 
             Console.WriteLine("To Hex string: {0}", 255.ToHexString(false));
