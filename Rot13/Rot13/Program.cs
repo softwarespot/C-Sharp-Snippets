@@ -3,25 +3,7 @@ using System.Collections.Generic;
 
 namespace Rot13
 {
-    internal class Program
-    {
-        public static void Main()
-        {
-            Rot13 rot13 = new Rot13(); // Create a rotation 13 object.
-            string encodedString = rot13.Encode("Rotate this string."); // Encode the string.
-            Console.WriteLine("Encoded string: {0}", encodedString);
-
-            string decodedString = rot13.Decode(encodedString); // Decode the rotated string.
-            Console.WriteLine("Decoded string: {0}", decodedString);
-
-            Console.WriteLine(""); // Create a new line.
-
-            Console.Write("Press any key to continue . . . ");
-            Console.ReadKey(true);
-        }
-    }
-
-    public class Rot13
+    public class Rot13 : ICipherRot
     {
         private Dictionary<char, char> rot13 = new Dictionary<char, char>();
 
@@ -62,7 +44,7 @@ namespace Rot13
         /// <returns>An encoded string.</returns>
         public string Encode(string data)
         {
-            char rotated = new char();
+            char rotated;
             char[] array = data.ToCharArray();
             for (int i = 0; i < array.Length; i++)
             {
@@ -74,4 +56,28 @@ namespace Rot13
             return new string(array);
         }
     }
+
+    internal class Program
+    {
+        public static void Main()
+        {
+            Rot13 rot13 = new Rot13(); // Create a rotation 13 object.
+            string encodedString = rot13.Encode("Rotate this string."); // Encode the string.
+            Console.WriteLine("Encoded string: {0}", encodedString);
+
+            string decodedString = rot13.Decode(encodedString); // Decode the rotated string.
+            Console.WriteLine("Decoded string: {0}", decodedString);
+
+            Console.WriteLine(""); // Create a new line.
+
+            Console.Write("Press any key to continue . . . ");
+            Console.ReadKey(true);
+        }
+    }
+}
+
+interface ICipherRot
+{
+    string Decode(string data);
+    string Encode(string data);
 }
