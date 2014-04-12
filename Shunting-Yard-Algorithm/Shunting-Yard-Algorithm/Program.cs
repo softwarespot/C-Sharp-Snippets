@@ -11,7 +11,7 @@ namespace Shunting_Yard_Algorithm
         /// </summary>
         /// <param name="expression">The postfix string expression.</param>
         /// <returns>The value.</returns>
-        public static string Calculate(string expression)
+        public static double Calculate(string expression)
         {
             Stack<double> stack = new Stack<double>();  // Create a stack to push/pop to.
             char token = new char(); // Token.
@@ -40,7 +40,7 @@ namespace Shunting_Yard_Algorithm
                     number1 = 0;
                 }
             }
-            return stack.Pop().ToString();
+            return stack.Pop();
         }
 
         /// <summary>

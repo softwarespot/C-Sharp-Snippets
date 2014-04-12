@@ -10,7 +10,7 @@ namespace Shunting_Yard_Algorithm_NoStackClass
         /// </summary>
         /// <param name="expression">The postfix string expression.</param>
         /// <returns>The value.</returns>
-        public static string Calculate(string expression)
+        public static double Calculate(string expression)
         {
             int buffer = expression.Length; // Create a buffer for the stack so that it can hold all symbol characters.
             double[] stack = new double[buffer];  // Create a stack to push/pop to.
@@ -29,8 +29,8 @@ namespace Shunting_Yard_Algorithm_NoStackClass
                 }
                 else if (IsOperator(token))
                 {
-                    number2 = (double)stack[index--]; // Pop stack.
-                    number1 = (double)stack[index--]; // Pop stack.
+                    number2 = stack[index--]; // Pop stack.
+                    number1 = stack[index--]; // Pop stack.
                     stack[++index] = Eval(number1, number2, token); // Push token to stack.
                 }
                 else if (char.IsWhiteSpace(token) && digits != string.Empty)
@@ -41,7 +41,7 @@ namespace Shunting_Yard_Algorithm_NoStackClass
                     number1 = 0;
                 }
             }
-            return stack[index--].ToString(); // Pop stack.
+            return stack[index--]; // Pop stack.
         }
 
         /// <summary>
