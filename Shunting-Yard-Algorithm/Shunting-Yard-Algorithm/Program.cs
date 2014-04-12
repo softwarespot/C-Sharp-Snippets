@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace Shunting_Yard_Algorithm
 {
@@ -13,7 +13,7 @@ namespace Shunting_Yard_Algorithm
         /// <returns>The value.</returns>
         public static string Calculate(string expression)
         {
-            Stack stack = new Stack();  // Create a stack to push/pop to.
+            Stack<double> stack = new Stack<double>();  // Create a stack to push/pop to.
             char token = new char(); // Token.
             string digits = string.Empty; // Hold string digits e.g. in case there are numbers greater than 1 digit long.
             double number1, number2;
@@ -28,8 +28,8 @@ namespace Shunting_Yard_Algorithm
                 }
                 else if (IsOperator(token))
                 {
-                    number2 = (double)stack.Pop();
-                    number1 = (double)stack.Pop();
+                    number2 = stack.Pop();
+                    number1 = stack.Pop();
                     stack.Push(Eval(number1, number2, token));
                 }
                 else if (char.IsWhiteSpace(token) && digits != string.Empty)
@@ -52,7 +52,7 @@ namespace Shunting_Yard_Algorithm
         {
             string output = string.Empty; // Output string.
 
-            Stack stack = new Stack(); // Create a stack to push/pop to.
+            Stack<char> stack = new Stack<char>(); // Create a stack to push/pop to.
             bool isBracket = false; // Is parenthesis.
             char token = new char(); // Token.
 
@@ -80,14 +80,14 @@ namespace Shunting_Yard_Algorithm
                             {
                                 output += stack.Pop();
                             }
-                            while (stack.Peek().ToString() != "(");
+                            while (stack.Peek() != '(');
                             stack.Pop();
                         }
                     }
                     else
                     {
                         output += " "; // Workaround for spacing and certain expressions.
-                        if (stack.Count > 0 && HasHigherPrecedence(token, char.Parse(stack.Peek().ToString())))
+                        if (stack.Count > 0 && HasHigherPrecedence(token, stack.Peek()))
                         {
                             output += stack.Pop();
                             stack.Push(token);
