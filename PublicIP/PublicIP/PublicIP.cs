@@ -40,6 +40,15 @@ namespace PublicIP
         /// <returns>Public IP address or null.</returns>
         public string Get()
         {
+            return Get(null);
+        }
+       /// <summary>
+        /// Public IP address of the local network.
+       /// </summary>
+       /// <param name="appName">Application name for the UserAgent.</param>
+       /// <returns></returns>
+        public string Get(string appName)
+        {
             if (timer.IsRunning && timer.ElapsedMilliseconds < Interval && this.publicIP != null)
             {
                 return this.publicIP;
@@ -49,7 +58,12 @@ namespace PublicIP
             timer.Start(); // Start the timer from zero.
             try
             {
-                string publicIP = (new WebClient()).DownloadString("http://myexternalip.com/raw");
+                WebClient webClient = new WebClient();
+                if (!string.IsNullOrEmpty(appName))
+                {
+                    webClient.Headers.Add(HttpRequestHeader.UserAgent, appName);
+                }
+                string publicIP = webClient.DownloadString("http://myexternalip.com/raw");
                 publicIP = (new Regex(@"((?:\d{1,3}\.){3}\d{1,3})")).Matches(publicIP)[0].ToString();
                 this.publicIP = publicIP;
             }
