@@ -18,24 +18,24 @@ namespace IsGUID
             guidValue = Guid.NewGuid().ToString(); // This is valid.
             Console.WriteLine("Is the GUID: {0}, a valid GUID?\r\nReturn: {1}", guidValue, IsGUID(guidValue));
 
-            Console.WriteLine(""); // Write a new line.
+            Console.WriteLine(); // Empty line.
 
             guidValue = "{4C425BDE-8D9A-466C-B252-AC74F6F0EFBF}"; // This is valid.
             Console.WriteLine("Is the GUID: {0}, a valid GUID?\r\nReturn: {1}", guidValue, IsGUID(guidValue));
 
-            Console.WriteLine(""); // Write a new line.
+            Console.WriteLine(); // Empty line.
 
             guidValue = "{4C425BDE-8D9A-466C-B252-AC74F6F0E}"; // This is invalid.
             Console.WriteLine("Is the GUID: {0}, a valid GUID?\r\nReturn: {1}", guidValue, IsGUID(guidValue));
 
-            Console.WriteLine(""); // Write a new line.
+            Console.WriteLine(); // Empty line.
 
             guidValue = "4C425BDE-8D9A-466C-B252-AC74F6F0EFBF"; // This is valid with no brackets.
             Console.WriteLine("Is the GUID: {0}, a valid GUID?\r\nReturn: {1}", guidValue, IsGUID(guidValue));
 
-            Console.WriteLine(""); // Write a new line.
+            Console.WriteLine(); // Empty line.
 
-            Console.WriteLine("Please enter any key to continue...");
+            Console.WriteLine("Press any key to continue . . .");
             Console.ReadKey(true);
         }
     }

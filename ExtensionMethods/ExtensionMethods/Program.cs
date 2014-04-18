@@ -288,7 +288,7 @@ namespace Example
             int seven = 7;
             Console.WriteLine(seven.IsPrime());
 
-            Console.Write("Press any key to continue . . . ");
+            Console.Write("Press any key to continue . . .");
             Console.ReadKey(true);
         }
     }

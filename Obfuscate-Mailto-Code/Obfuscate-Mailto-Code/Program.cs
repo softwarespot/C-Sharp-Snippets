@@ -55,7 +55,8 @@ namespace Obfuscate_Mailto_Code
                 }
             }
 
-            Console.Write("\nPress any key to continue . . . ");
+            Console.WriteLine(); // Empty line.
+            Console.Write("Press any key to continue . . .");
             Console.ReadKey(true);
         }
     }

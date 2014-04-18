@@ -11,7 +11,7 @@ namespace IsPrimeNumber
             {
                 Console.Write("Please enter an integer number to see if it's a prime number: ");
                 int.TryParse(Console.ReadLine(), out userChoice);
-                Console.WriteLine(""); // New line.
+                Console.WriteLine(); // New line.
             }
             while (userChoice <= 0);
 
@@ -24,10 +24,10 @@ namespace IsPrimeNumber
             {
                 Console.WriteLine("Your number is NOT a prime value as it's divisible by {0}.", numberDivisible);
             }
-            Console.WriteLine(""); // New line.
+            Console.WriteLine(); // New line.
 
-            Console.WriteLine("Please enter any key . . .");
-            Console.ReadKey();
+            Console.WriteLine("Press any key to continue . . .");
+            Console.ReadKey(true);
         }
 
         private static bool IsPrimeNumber(int number, out int? divisibleBy) // divisibleBy is a nullable datatype.

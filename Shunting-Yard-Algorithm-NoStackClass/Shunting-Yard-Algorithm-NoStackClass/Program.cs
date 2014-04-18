@@ -217,26 +217,26 @@ namespace Shunting_Yard_Algorithm_NoStackClass
             Console.WriteLine("{0} == {1}", "3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3", ShuntingYard.Parse("3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3"));
             Console.WriteLine("Reference: 3 4 2 * 1 5 − 2 3 ^ ^ / +");
 
-            Console.WriteLine(""); // A new line.
+            Console.WriteLine(); // A new line.
 
             Console.WriteLine("{0} == {1}", "3 + 4", ShuntingYard.Parse("3 + 4"));
             Console.WriteLine("Reference: 3 4 +");
 
-            Console.WriteLine(""); // A new line.
+            Console.WriteLine(); // A new line.
 
             // Expression from: http://www.slideshare.net/grahamwell/shunting-yard.
 
             Console.WriteLine("{0}: == {1}", "2 + (3 * (8 - 4))", ShuntingYard.Parse("2 + (3 * (8 - 4))"));
             Console.WriteLine("Reference: 2 3 8 4 - * +");
 
-            Console.WriteLine(""); // A new line.
+            Console.WriteLine(); // A new line.
 
             // Calculate postfix notation (RPN) examples.
             Console.WriteLine("3 4 + == " + ShuntingYard.Calculate("3 4 +"));
             Console.WriteLine("3 4 2 * 1 5 - 2 3 ^ ^ / + == " + ShuntingYard.Calculate("3 4 2 * 1 5 − 2 3 ^ ^ / +"));
             Console.WriteLine("2 3 8 4 - * + == " + ShuntingYard.Calculate("2 3 8 4 - * +"));
 
-            Console.WriteLine("Press any key to continue . . . ");
+            Console.WriteLine("Press any key to continue . . .");
             Console.ReadKey(true);
         }
     }

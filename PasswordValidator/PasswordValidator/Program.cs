@@ -140,15 +140,15 @@ namespace PasswordValidator
             PW1 = null; // Destroy the PasswordValid object reference.
             PW1_Errors = null; // Destroy the Results object reference.
 
-            Console.WriteLine(""); // Write a new line.
+            Console.WriteLine(); // Empty line.
 
-            Console.WriteLine("Please enter any key to continue...");
+            Console.WriteLine("Press any key to continue . . .");
             Console.ReadKey(true);
         }
 
         private static void PrintErrorResults(Password.Errors passwordResults)
         {
-            Console.WriteLine(""); // Write a new line.
+            Console.WriteLine(); // Empty line.
             if (passwordResults.IsValid)
                 return; // Return if the IsValid property is true as this indicated no error was created.
             if (passwordResults.HasConsecutive)
@@ -165,7 +165,7 @@ namespace PasswordValidator
                 Console.WriteLine("The password didn't contain the minimum number of special characters.");
             if (passwordResults.IsUpperCase)
                 Console.WriteLine("The password didn't contain the minimum number of uppercase characters.");
-            Console.WriteLine(""); // Write a new line.
+            Console.WriteLine(); // Empty line.
             return;
         }
     }

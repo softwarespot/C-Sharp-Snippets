@@ -32,9 +32,9 @@ namespace bubble_sort
                 Console.Write(userChoice[i] + ((i != userChoice.Length - 1) ? ", " : ".")); // Formatting commas and period only.
             }
 
-            Console.WriteLine(""); // Write a new line.
+            Console.WriteLine(); // Empty line.
 
-            Console.WriteLine("Please enter any key to continue...");
+            Console.WriteLine("Press any key to continue . . .");
             Console.ReadKey(true);
         }
     }

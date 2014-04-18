@@ -68,9 +68,9 @@ namespace Rot13
             string decodedString = rot13.Decode(encodedString); // Decode the rotated string.
             Console.WriteLine("Decoded string: {0}", decodedString);
 
-            Console.WriteLine(""); // Create a new line.
+            Console.WriteLine(); // Create a new line.
 
-            Console.Write("Press any key to continue . . . ");
+            Console.Write("Press any key to continue . . .");
             Console.ReadKey(true);
         }
     }

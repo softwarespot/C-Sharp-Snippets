@@ -14,7 +14,7 @@ namespace pre_increment_and_post_increment
             Console.WriteLine("3. " + ++value); // Increase by 1 and then return the value. (value = 4)
             Console.WriteLine("4. " + value); // (value = 4)
 
-            Console.WriteLine("Please enter any key to continue...");
+            Console.WriteLine("Press any key to continue . . .");
             Console.ReadKey(true);
         }
     }

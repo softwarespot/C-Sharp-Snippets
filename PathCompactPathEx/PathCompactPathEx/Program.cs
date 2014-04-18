@@ -9,6 +9,10 @@ namespace PathCompactPathEx
         private static void Main()
         {
             Console.WriteLine(PathCompactPathEx(@"C:\This_is_some_long_file_path\with_a_couple_of_folders\and_a\filename.txt", 20));
+            
+            Console.WriteLine(); // New line.
+
+            Console.WriteLine("Press any key to continue . . .");
             Console.ReadKey(true);
         }
 

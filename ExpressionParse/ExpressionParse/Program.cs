@@ -47,7 +47,7 @@ namespace ExpressionParse
                 }
             }
 
-            Console.WriteLine("Please enter any key to continue...");
+            Console.WriteLine("Press any key to continue . . .");
             Console.ReadKey(true);
         }
     }

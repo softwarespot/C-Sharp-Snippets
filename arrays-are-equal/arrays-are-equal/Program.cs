@@ -31,7 +31,7 @@ namespace arrays_are_equal
             /* A: No, because even though the sequence is 0, 1, 2, 3, 4, with the new keyword all "empty" elements are set to the default value,
              * which is 0 for integer datatypes. Therefore we are comparing 0, 1, 2, 3, 4, 0, 0, 0, 0, 0 to 0, 1, 2, 3, 4. */
 
-            Console.WriteLine("Please enter any key to continue...");
+            Console.WriteLine("Press any key to continue . . .");
             Console.ReadKey(true);
         }
     }
