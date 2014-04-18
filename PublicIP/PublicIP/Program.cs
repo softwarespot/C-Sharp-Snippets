@@ -7,7 +7,8 @@ namespace PublicIP
         private static void Main()
         {
             PublicIP publicIP = new PublicIP();
-            Console.WriteLine("Public IP: {0}", publicIP.Get("PublicIPExample"));
+            publicIP.UserAgent = "PublicIPExample"; // Set the UserAgent string.
+            Console.WriteLine("Public IP: {0}", publicIP.Get());
             Console.WriteLine("IP discovery interval: {0}", publicIP.Interval);
             Console.WriteLine("Public IP (ToString): {0}", publicIP.ToString());
 

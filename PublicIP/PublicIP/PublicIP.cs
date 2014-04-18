@@ -15,6 +15,19 @@ namespace PublicIP
         public PublicIP() // Constructor.
         {
             Interval = 300000; // Property for how many milliseconds between each check. This is 5 minutes.
+            UserAgent = null; // Assign as null.
+            publicIP = null; // Assign as null.
+            timer = new Stopwatch(); // Create a new Stopwatch object.
+        }
+
+        /// <summary>
+        /// Retrieves the public IP address of the local network
+        /// </summary>
+        /// <param name="userAgent">UserAgent string.</param>
+        public PublicIP(string userAgent) // Constructor.
+        {
+            Interval = 300000; // Property for how many milliseconds between each check. This is 5 minutes.
+            UserAgent = userAgent;
             publicIP = null; // Assign as null.
             timer = new Stopwatch(); // Create a new Stopwatch object.
         }
@@ -35,23 +48,23 @@ namespace PublicIP
         }
 
         /// <summary>
+        /// UserAgent string.
+        /// </summary>
+        public string UserAgent
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Public IP address of the local network.
         /// </summary>
         /// <returns>Public IP address or null.</returns>
         public string Get()
         {
-            return Get(null);
-        }
-       /// <summary>
-        /// Public IP address of the local network.
-       /// </summary>
-       /// <param name="appName">Application name for the UserAgent.</param>
-       /// <returns></returns>
-        public string Get(string appName)
-        {
-            if (timer.IsRunning && timer.ElapsedMilliseconds < Interval && this.publicIP != null)
+            if (timer.IsRunning && timer.ElapsedMilliseconds < Interval && publicIP != null)
             {
-                return this.publicIP;
+                return publicIP;
             }
 
             timer.Reset(); // Reset the timer.
@@ -59,16 +72,18 @@ namespace PublicIP
             try
             {
                 WebClient webClient = new WebClient();
-                if (!string.IsNullOrEmpty(appName))
+                if (!string.IsNullOrEmpty(UserAgent))
                 {
-                    webClient.Headers.Add(HttpRequestHeader.UserAgent, appName);
+                    webClient.Headers.Add(HttpRequestHeader.UserAgent, UserAgent);
                 }
-                string publicIP = webClient.DownloadString("http://myexternalip.com/raw");
-                publicIP = (new Regex(@"((?:\d{1,3}\.){3}\d{1,3})")).Matches(publicIP)[0].ToString();
-                this.publicIP = publicIP;
+                string iP = webClient.DownloadString("http://myexternalip.com/raw");
+                iP = (new Regex(@"((?:\d{1,3}\.){3}\d{1,3})")).Matches(iP)[0].ToString();
+                publicIP = iP;
             }
-            catch { }
-            return this.publicIP;
+            catch
+            {
+            }
+            return publicIP;
         }
 
         /// <summary>
@@ -77,7 +92,7 @@ namespace PublicIP
         /// <returns>Public IP address of the local network.</returns>
         public override string ToString()
         {
-            return this.publicIP;
+            return publicIP;
         }
     }
 }
