@@ -69,19 +69,30 @@ namespace PublicIP
 
             timer.Reset(); // Reset the timer.
             timer.Start(); // Start the timer from zero.
-            try
+
+            WebClient webClient = new WebClient();
+            if (!string.IsNullOrEmpty(UserAgent))
             {
-                WebClient webClient = new WebClient();
-                if (!string.IsNullOrEmpty(UserAgent))
-                {
-                    webClient.Headers.Add(HttpRequestHeader.UserAgent, UserAgent);
-                }
-                string iP = webClient.DownloadString("http://myexternalip.com/raw");
-                iP = (new Regex(@"((?:\d{1,3}\.){3}\d{1,3})")).Matches(iP)[0].ToString();
-                publicIP = iP;
+                webClient.Headers.Add(HttpRequestHeader.UserAgent, UserAgent);
             }
-            catch
+            string[] ipGetURL = { "http://checkip.dyndns.org", "http://www.myexternalip.com/raw", "http://bot.whatismyipaddress.com" };
+            foreach (string url in ipGetURL)
             {
+                string ip = null;
+                try
+                {
+                    ip = webClient.DownloadString(url);
+                    ip = (new Regex(@"((?:\d{1,3}\.){3}\d{1,3})")).Matches(ip)[0].ToString();
+                }
+                catch
+                {
+                    ip = null; // If an error occurred set ip to null.
+                }
+                if (ip != null) // If ip is not null then no error occurred.
+                {
+                    publicIP = ip;
+                    break;
+                }
             }
             return publicIP;
         }
