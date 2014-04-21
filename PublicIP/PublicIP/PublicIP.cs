@@ -67,8 +67,7 @@ namespace PublicIP
                 return publicIP;
             }
 
-            timer.Reset(); // Reset the timer.
-            timer.Start(); // Start the timer from zero.
+            timer.Restart(); // Restart the timer.
 
             WebClient webClient = new WebClient();
             if (!string.IsNullOrEmpty(UserAgent))
