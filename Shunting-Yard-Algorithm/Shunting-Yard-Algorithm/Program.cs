@@ -13,7 +13,7 @@ namespace Shunting_Yard_Algorithm
         /// <returns>The value.</returns>
         public static double Calculate(string expression)
         {
-            Stack<double> stack = new Stack<double>();  // Create a stack to push/pop to.
+            Stack<double> stack = new Stack<double>(expression.Length);  // Create a stack to push/pop to.
             char token = new char(); // Token.
             string digits = string.Empty; // Hold string digits e.g. in case there are numbers greater than 1 digit long.
             double number1, number2;
