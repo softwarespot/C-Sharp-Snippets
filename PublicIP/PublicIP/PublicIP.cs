@@ -6,8 +6,8 @@ namespace PublicIP
 {
     internal class PublicIP // Idea about DownloadString(): http://www.codeproject.com/Tips/452024/Getting-the-External-IP-Address
     {
-        private string publicIP;
-        private Stopwatch timer;
+        private static string publicIP = null; // Assign as null.
+        private static Stopwatch timer = new Stopwatch(); // Create a new Stopwatch object.
 
         /// <summary>
         /// Retrieves the public IP address of the local network.
@@ -16,8 +16,6 @@ namespace PublicIP
         {
             Interval = 300000; // Property for how many milliseconds between each check. This is 5 minutes.
             UserAgent = null; // Assign as null.
-            publicIP = null; // Assign as null.
-            timer = new Stopwatch(); // Create a new Stopwatch object.
         }
 
         /// <summary>
@@ -28,14 +26,10 @@ namespace PublicIP
         {
             Interval = 300000; // Property for how many milliseconds between each check. This is 5 minutes.
             UserAgent = userAgent;
-            publicIP = null; // Assign as null.
-            timer = new Stopwatch(); // Create a new Stopwatch object.
         }
 
-        ~PublicIP() // DeConstructor.
+       ~PublicIP() // DeConstructor.
         {
-            timer.Stop();
-            timer = null;
         }
 
         /// <summary>
@@ -54,6 +48,16 @@ namespace PublicIP
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Public IP address of the local network.
+        /// </summary>
+        /// <param name="userAgent">UserAgent string.</param>
+        /// <returns></returns>
+        public static string Get(string userAgent)
+        {
+            return new PublicIP(userAgent).Get();
         }
 
         /// <summary>
