@@ -9,6 +9,7 @@ namespace SharpDevelopPortable
     {
         public static void Main()
         {
+            // http://stackoverflow.com/questions/5274829/configurationmanager-appsettings-how-to-modify-and-save
             string sharpExecutable = Application.StartupPath + @"\bin\SharpDevelop.exe";
             string sharpConfig = sharpExecutable + ".config";
             if (!File.Exists(sharpConfig) || !File.Exists(sharpExecutable)) // Check if both files are present.
