@@ -21,7 +21,6 @@ namespace SharpDevelopPortable
             var fileRead = new StreamReader(sharpConfig); // Read the config file to a new stream.
             string dataString = fileRead.ReadToEnd();
             fileRead.Close(); // Close the file stream.
-            fileRead = null;
 
             string srePattern = @"(?<!<!--\s)<add\s+key=""KEYVALUE""\s+value=""\.\.\\VALUEVAL""\s+\/>"; // Regular expression pattern.
             if (!Regex.IsMatch(dataString, srePattern.Replace("KEYVALUE", "settingsPath").Replace("VALUEVAL", "Settings")) ||
@@ -34,12 +33,14 @@ namespace SharpDevelopPortable
                 var fileWrite = new StreamWriter(sharpConfig, false); // Write to the file and set append as false to overwrite the file.
                 fileWrite.Write(dataString);
                 fileWrite.Close(); // Close the file stream.
-                fileWrite = null;
             }
 
-            var processInfo = new ProcessStartInfo();
-            processInfo.FileName = sharpExecutable;
-            processInfo.WorkingDirectory = Application.StartupPath + @"\bin"; // Set the current directory to be in the bin.
+            var processInfo = new ProcessStartInfo
+            {
+                FileName = sharpExecutable,
+                WorkingDirectory = Application.StartupPath + @"\bin" // Set the current directory to be in the bin.
+            };
+
 
             // Execute the SharpDevelop.exe file.
             Process.Start(processInfo);

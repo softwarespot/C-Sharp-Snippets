@@ -6,7 +6,8 @@ namespace Obfuscate_Mailto_Code
 {
     internal class Program
     {
-        [STAThread] // http://stackoverflow.com/questions/19707885/c-sharp-copy-to-clipboard
+        [STAThread]
+        // http://stackoverflow.com/questions/19707885/c-sharp-copy-to-clipboard
         public static void Main()
         {
             /*
@@ -17,7 +18,7 @@ namespace Obfuscate_Mailto_Code
              * The same license as Obfuscate Mailto Code - Creative Commons Attribution-ShareAlike 2.5 License.
              */
             Console.Write("Enter a valid e-mail address: ");
-            string email = Console.ReadLine(), emailnew = string.Empty;
+            string email = Console.ReadLine() ?? "", emailnew = string.Empty;
             if (!Regex.IsMatch(email, @"^[A-Z0-9!#$%&'*+\-\/=?\^_`{|}~]+@[A-Z0-9.-]+\.[A-Z]{2,4}$", RegexOptions.IgnoreCase)) // Specification: http://en.wikipedia.org/wiki/E-mail_address
             {
                 Console.WriteLine("\nAn error occurred. Please check you entered a correct e-mail address.");
@@ -29,7 +30,7 @@ namespace Obfuscate_Mailto_Code
                     emailnew += @"&#" + (int)email[i] + ";"; // Cast from char to an integer value.
                 }
 
-                string[] split = emailnew.Split(new String[] { "&#64;" }, StringSplitOptions.None);
+                var split = emailnew.Split(new[] { "&#64;" }, StringSplitOptions.None);
                 if (split.Length != 2)
                 {
                     Console.WriteLine("\nAn error occurred. Please check you entered a correct e-mail address.");
@@ -51,7 +52,7 @@ namespace Obfuscate_Mailto_Code
                     output += split[1].Replace("&#46;", " dot ") + @"</noscript>";
 
                     Clipboard.SetText(output, TextDataFormat.Text);
-                    Console.Write("\nThe following ouput has been placed on the clipboard.\n\n" + output + "\n");
+                    Console.Write("\nThe following output has been placed on the clipboard.\n\n" + output + "\n");
                 }
             }
 

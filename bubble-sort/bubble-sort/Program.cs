@@ -45,7 +45,7 @@ namespace bubble_sort
     {
         private static void CreateArray(int[] array)
         {
-            Random random = new Random(Environment.TickCount);
+            var random = new Random(Environment.TickCount);
             for (int i = 0, lastElement = array.Length - 1; i <= lastElement; i++)
             {
                 array[i] = random.Next(1, 1000);

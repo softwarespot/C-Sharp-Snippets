@@ -5,15 +5,17 @@ namespace Rot13
 {
     public class Rot13 : ICipherRot
     {
-        private Dictionary<char, char> rot13 = new Dictionary<char, char>();
+        private readonly Dictionary<char, char> rot13 = new Dictionary<char, char>();
 
         /// <summary>
         /// Initialise the dictionary on a per object basis. I guess it could be made static as well?!
         /// </summary>
         public Rot13()
         {
-            string lowLower = "abcdefghijklm", highLower = "nopqrstuvwxyz";
-            string lowUpper = "ABCDEFGHIJKLM", highUpper = "NOPQRSTUVWXYZ";
+            const string lowLower = "abcdefghijklm";
+            const string highLower = "nopqrstuvwxyz";
+            const string lowUpper = "ABCDEFGHIJKLM";
+            const string highUpper = "NOPQRSTUVWXYZ";
 
             for (int i = 0; i < lowUpper.Length; i++)
             {
@@ -44,10 +46,10 @@ namespace Rot13
         /// <returns>An encoded string.</returns>
         public string Encode(string data)
         {
-            char rotated;
-            char[] array = data.ToCharArray();
+            var array = data.ToCharArray();
             for (int i = 0; i < array.Length; i++)
             {
+                char rotated;
                 if (rot13.TryGetValue(array[i], out rotated))
                 {
                     array[i] = rotated;
@@ -61,7 +63,7 @@ namespace Rot13
     {
         public static void Main()
         {
-            Rot13 rot13 = new Rot13(); // Create a rotation 13 object.
+            var rot13 = new Rot13(); // Create a rotation 13 object.
             string encodedString = rot13.Encode("Rotate this string."); // Encode the string.
             Console.WriteLine("Encoded string: {0}", encodedString);
 

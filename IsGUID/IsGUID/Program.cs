@@ -1,5 +1,9 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Text.RegularExpressions;
+
+#endregion
 
 namespace IsGUID
 {
@@ -7,15 +11,15 @@ namespace IsGUID
     {
         private static bool IsGUID(string guid)
         {
-            return Regex.IsMatch(guid, @"^(?:\{){0,1}[0-9A-Za-z]{8}-(?:[0-9A-Za-z]{4}-){3}[0-9A-Za-z]{12}(?:\}){0,1}$");
+            return !String.IsNullOrEmpty(guid) && Regex.IsMatch(guid,
+                @"^(?:(?<curly>\{)?[0-9A-Fa-f]{8}-(?:[0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}(?(curly)\}))$");
         }
 
         private static void Main()
         {
             // Checks if a GUID contains <8 hex values>-<4 hex values>-<4 hex values>-<4 hex values>-<12 hex values> with optional brackets.
-            string guidValue = string.Empty;
 
-            guidValue = Guid.NewGuid().ToString(); // This is valid.
+            string guidValue = Guid.NewGuid().ToString();
             Console.WriteLine("Is the GUID: {0}, a valid GUID?\r\nReturn: {1}", guidValue, IsGUID(guidValue));
 
             Console.WriteLine(); // Empty line.

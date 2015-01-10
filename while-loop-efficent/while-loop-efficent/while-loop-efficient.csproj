@@ -7,7 +7,7 @@
     <ProjectGuid>{CD7F003D-DEE2-4A48-B609-9FDDC98207CE}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>while_loop_efficent</RootNamespace>
+    <RootNamespace>while_loop_efficient</RootNamespace>
     <AssemblyName>while-loop-efficent</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

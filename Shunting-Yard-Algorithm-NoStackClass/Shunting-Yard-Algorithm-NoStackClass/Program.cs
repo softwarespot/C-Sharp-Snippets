@@ -1,4 +1,8 @@
-﻿using System;
+﻿#region
+
+using System;
+
+#endregion
 
 namespace Shunting_Yard_Algorithm_NoStackClass
 {
@@ -6,22 +10,22 @@ namespace Shunting_Yard_Algorithm_NoStackClass
     internal static class ShuntingYard
     {
         /// <summary>
-        /// Calculate the value of a postfix notation (RPN) expression.
+        ///     Calculate the value of a postfix notation (RPN) expression.
         /// </summary>
         /// <param name="expression">The postfix string expression.</param>
         /// <returns>The value.</returns>
         public static double Calculate(string expression)
         {
             int buffer = expression.Length; // Create a buffer for the stack so that it can hold all symbol characters.
-            double[] stack = new double[buffer];  // Create a stack to push/pop to.
+            var stack = new double[buffer]; // Create a stack to push/pop to.
             int index = 0; // index item of the stack.
-            char token = new char(); // Token.
-            string digits = string.Empty; // Hold string digits e.g. in case there are numbers greater than 1 digit long.
-            double number1, number2;
+            string digits = string.Empty;
+            // Hold string digits e.g. in case there are numbers greater than 1 digit long.
 
             for (int i = 0; i < buffer; i++)
             {
-                token = expression[i];
+                char token = expression[i]; // Token.
+                double number1;
 
                 if (char.IsDigit(token))
                 {
@@ -29,7 +33,7 @@ namespace Shunting_Yard_Algorithm_NoStackClass
                 }
                 else if (IsOperator(token))
                 {
-                    number2 = stack[index--]; // Pop stack.
+                    double number2 = stack[index--];
                     number1 = stack[index--]; // Pop stack.
                     stack[++index] = Eval(number1, number2, token); // Push token to stack.
                 }
@@ -38,14 +42,13 @@ namespace Shunting_Yard_Algorithm_NoStackClass
                     if (double.TryParse(digits, out number1))
                         stack[++index] = number1; // Push token to stack.
                     digits = string.Empty;
-                    number1 = 0;
                 }
             }
-            return stack[index--]; // Pop stack.
+            return stack[index]; // Pop stack.
         }
 
         /// <summary>
-        /// Parses an expression from infix notation to postfix notation (RPN).
+        ///     Parses an expression from infix notation to postfix notation (RPN).
         /// </summary>
         /// <param name="expression">The infix string expression.</param>
         /// <returns>Postfix notation.</returns>
@@ -54,14 +57,12 @@ namespace Shunting_Yard_Algorithm_NoStackClass
             string output = string.Empty; // Output string.
 
             int buffer = expression.Length; // Create stack that can hold all characters.
-            char[] stack = new char[buffer]; // Create a stack to push/pop to.
-            int index = 0; // index item of the stack.
-            bool isBracket = false; // Is parenthesis.
-            char token = new char(); // Token.
+            var stack = new char[buffer]; // Create a stack to push/pop to.
+            int index = 0; // index item of the stack. 
 
             for (int i = 0; i < buffer; i++)
             {
-                token = expression[i];
+                char token = expression[i]; // Token.
 
                 if (char.IsDigit(token)) // If a digit add to the output string.
                 {
@@ -71,7 +72,7 @@ namespace Shunting_Yard_Algorithm_NoStackClass
                 {
                     if (IsBracket(token))
                     {
-                        isBracket = token == '('; // True if open bracket else False if closing.
+                        bool isBracket = token == '('; // Is parenthesis.
                         if (isBracket) // Open bracket.
                         {
                             stack[++index] = token; // Push token to stack.
@@ -82,8 +83,7 @@ namespace Shunting_Yard_Algorithm_NoStackClass
                             do // Repeat until '(' is found.
                             {
                                 output += stack[index--]; // Pop stack.
-                            }
-                            while (stack[index] != '(');
+                            } while (stack[index] != '(');
                             stack[index--] = new char(); // Pop stack and disregard match '('.
                         }
                     }
@@ -104,20 +104,23 @@ namespace Shunting_Yard_Algorithm_NoStackClass
                 }
             }
 
-            if (index >= 0) // Append what is left on the stack in reverse order.
+            if (index < 0)
             {
-                output += " ";
-                while (index >= 0)
-                {
-                    output += stack[index--] + " "; // Pop stack.
-                }
+                return output;
+            }
+
+            // Append what is left on the stack in reverse order.
+            output += " ";
+            while (index >= 0)
+            {
+                output += stack[index--] + " "; // Pop stack.
             }
             return output;
         }
 
         // Private wrapper functions.
         /// <summary>
-        /// Evaluate a simple expression using standard mathematical operators.
+        ///     Evaluate a simple expression using standard mathematical operators.
         /// </summary>
         /// <param name="i1">The first value.</param>
         /// <param name="i2">The second value.</param>
@@ -149,7 +152,7 @@ namespace Shunting_Yard_Algorithm_NoStackClass
         }
 
         /// <summary>
-        /// Checks whether the first symbol has higher precedence over the second symbol.
+        ///     Checks whether the first symbol has higher precedence over the second symbol.
         /// </summary>
         /// <param name="c1">The first symbol.</param>
         /// <param name="c2">The second symbol.</param>
@@ -164,7 +167,7 @@ namespace Shunting_Yard_Algorithm_NoStackClass
         }
 
         /// <summary>
-        /// Checks if a character is a round bracket.
+        ///     Checks if a character is a round bracket.
         /// </summary>
         /// <param name="c">The char value.</param>
         /// <returns>True or False.</returns>
@@ -174,17 +177,18 @@ namespace Shunting_Yard_Algorithm_NoStackClass
         }
 
         /// <summary>
-        /// Checks if a character is a valid operator symbol.
+        ///     Checks if a character is a valid operator symbol.
         /// </summary>
         /// <param name="c">The char value.</param>
         /// <returns>True or False.</returns>
         private static bool IsOperator(char c)
         {
-            return c == '+' || c == '-' || c == 8722 || c == '*' || c == '/' || c == '^' || c == '(' || c == ')'; // Char 8722 is - but the unicode char code.
+            return c == '+' || c == '-' || c == 8722 || c == '*' || c == '/' || c == '^' || c == '(' || c == ')';
+            // Char 8722 is - but the unicode char code.
         }
 
         /// <summary>
-        /// The precedence value of a symbol.
+        ///     The precedence value of a symbol.
         /// </summary>
         /// <param name="c">The char value.</param>
         /// <returns>The precedence value.</returns>
@@ -214,7 +218,8 @@ namespace Shunting_Yard_Algorithm_NoStackClass
         public static void Main()
         {
             // Create postfix notation (RPN) from infix notation.
-            Console.WriteLine("{0} == {1}", "3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3", ShuntingYard.Parse("3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3"));
+            Console.WriteLine("{0} == {1}", "3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3",
+                ShuntingYard.Parse("3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3"));
             Console.WriteLine("Reference: 3 4 2 * 1 5 − 2 3 ^ ^ / +");
 
             Console.WriteLine(); // A new line.

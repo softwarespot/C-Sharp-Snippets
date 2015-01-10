@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace while_loop_efficent
+namespace while_loop_efficient
 {
     internal class Program
     {

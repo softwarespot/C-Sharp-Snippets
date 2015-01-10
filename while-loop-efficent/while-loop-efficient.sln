@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "while-loop-efficent", "while-loop-efficent\while-loop-efficent.csproj", "{CD7F003D-DEE2-4A48-B609-9FDDC98207CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "while-loop-efficient", "while-loop-efficent\while-loop-efficient.csproj", "{CD7F003D-DEE2-4A48-B609-9FDDC98207CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

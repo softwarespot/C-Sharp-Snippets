@@ -1,16 +1,22 @@
-﻿using System.Diagnostics;
+﻿#region
+
+using System;
+using System.Diagnostics;
 using System.Net;
 using System.Text.RegularExpressions;
 
+#endregion
+
 namespace PublicIP
 {
-    internal class PublicIP // Idea about DownloadString(): http://www.codeproject.com/Tips/452024/Getting-the-External-IP-Address
+    internal class PublicIP
+    // Idea about DownloadString(): http://www.codeproject.com/Tips/452024/Getting-the-External-IP-Address
     {
-        private static string publicIP = null; // Assign as null.
-        private static Stopwatch timer = new Stopwatch(); // Create a new Stopwatch object.
+        private static string publicIP; // Assign as null.
+        private static readonly Stopwatch timer = new Stopwatch(); // Create a new Stopwatch object.
 
         /// <summary>
-        /// Retrieves the public IP address of the local network.
+        ///     Retrieves the public IP address of the local network.
         /// </summary>
         public PublicIP() // Constructor.
         {
@@ -19,7 +25,7 @@ namespace PublicIP
         }
 
         /// <summary>
-        /// Retrieves the public IP address of the local network
+        ///     Retrieves the public IP address of the local network
         /// </summary>
         /// <param name="userAgent">UserAgent string.</param>
         public PublicIP(string userAgent) // Constructor.
@@ -28,30 +34,18 @@ namespace PublicIP
             UserAgent = userAgent;
         }
 
-       ~PublicIP() // DeConstructor.
-        {
-        }
-
         /// <summary>
-        /// Interval in milliseconds of how often the IP discovery site is queried.
+        ///     Interval in milliseconds of how often the IP discovery site is queried.
         /// </summary>
-        public int Interval
-        {
-            get;
-            private set;
-        }
+        public int Interval { get; private set; }
 
         /// <summary>
-        /// UserAgent string.
+        ///     UserAgent string.
         /// </summary>
-        public string UserAgent
-        {
-            get;
-            set;
-        }
+        public string UserAgent { get; set; }
 
         /// <summary>
-        /// Public IP address of the local network.
+        ///     Public IP address of the local network.
         /// </summary>
         /// <param name="userAgent">UserAgent string.</param>
         /// <returns></returns>
@@ -61,7 +55,7 @@ namespace PublicIP
         }
 
         /// <summary>
-        /// Public IP address of the local network.
+        ///     Public IP address of the local network.
         /// </summary>
         /// <returns>Public IP address or null.</returns>
         public string Get()
@@ -73,15 +67,19 @@ namespace PublicIP
 
             timer.Restart(); // Restart the timer.
 
-            WebClient webClient = new WebClient();
-            if (!string.IsNullOrEmpty(UserAgent))
+            var webClient = new WebClient();
+            if (!String.IsNullOrEmpty(UserAgent))
             {
                 webClient.Headers.Add(HttpRequestHeader.UserAgent, UserAgent);
             }
-            string[] ipGetURL = { "http://checkip.dyndns.org", "http://www.myexternalip.com/raw", "http://bot.whatismyipaddress.com" };
+            string[] ipGetURL =
+            {
+                "http://checkip.dyndns.org", "http://www.myexternalip.com/raw",
+                "http://bot.whatismyipaddress.com"
+            };
             foreach (string url in ipGetURL)
             {
-                string ip = null;
+                string ip;
                 try
                 {
                     ip = webClient.DownloadString(url);
@@ -91,17 +89,19 @@ namespace PublicIP
                 {
                     ip = null; // If an error occurred set ip to null.
                 }
-                if (ip != null) // If ip is not null then no error occurred.
+                if (ip == null)
                 {
-                    publicIP = ip;
-                    break;
+                    continue;
                 }
+                // If ip is not null then no error occurred.
+                publicIP = ip;
+                break;
             }
             return publicIP;
         }
 
         /// <summary>
-        /// Public IP address of the local network.
+        ///     Public IP address of the local network.
         /// </summary>
         /// <returns>Public IP address of the local network.</returns>
         public override string ToString()

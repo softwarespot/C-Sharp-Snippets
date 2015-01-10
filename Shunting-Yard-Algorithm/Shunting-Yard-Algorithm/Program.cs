@@ -1,5 +1,9 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
+
+#endregion
 
 namespace Shunting_Yard_Algorithm
 {
@@ -7,20 +11,20 @@ namespace Shunting_Yard_Algorithm
     internal static class ShuntingYard
     {
         /// <summary>
-        /// Calculate the value of a postfix notation (RPN) expression.
+        ///     Calculate the value of a postfix notation (RPN) expression.
         /// </summary>
         /// <param name="expression">The postfix string expression.</param>
         /// <returns>The value.</returns>
         public static double Calculate(string expression)
         {
-            Stack<double> stack = new Stack<double>(expression.Length);  // Create a stack to push/pop to.
-            char token = new char(); // Token.
-            string digits = string.Empty; // Hold string digits e.g. in case there are numbers greater than 1 digit long.
-            double number1, number2;
+            var stack = new Stack<double>(expression.Length); // Create a stack to push/pop to.
+            string digits = string.Empty;
 
             for (int i = 0; i < expression.Length; i++)
             {
-                token = expression[i];
+                char token = expression[i]; // Token.
+                // Hold string digits e.g. in case there are numbers greater than 1 digit long.
+                double number1;
 
                 if (char.IsDigit(token))
                 {
@@ -28,7 +32,7 @@ namespace Shunting_Yard_Algorithm
                 }
                 else if (IsOperator(token))
                 {
-                    number2 = stack.Pop();
+                    double number2 = stack.Pop();
                     number1 = stack.Pop();
                     stack.Push(Eval(number1, number2, token));
                 }
@@ -37,14 +41,13 @@ namespace Shunting_Yard_Algorithm
                     if (double.TryParse(digits, out number1))
                         stack.Push(number1);
                     digits = string.Empty;
-                    number1 = 0;
                 }
             }
             return stack.Pop();
         }
 
         /// <summary>
-        /// Parses an expression from infix notation to postfix notation (RPN).
+        ///     Parses an expression from infix notation to postfix notation (RPN).
         /// </summary>
         /// <param name="expression">The infix string expression.</param>
         /// <returns>Postfix notation.</returns>
@@ -52,13 +55,11 @@ namespace Shunting_Yard_Algorithm
         {
             string output = string.Empty; // Output string.
 
-            Stack<char> stack = new Stack<char>(); // Create a stack to push/pop to.
-            bool isBracket = false; // Is parenthesis.
-            char token = new char(); // Token.
+            var stack = new Stack<char>(); // Create a stack to push/pop to.
 
             for (int i = 0; i < expression.Length; i++)
             {
-                token = expression[i];
+                char token = expression[i]; // Token.
 
                 if (char.IsDigit(token)) // If a digit add to the output string.
                 {
@@ -68,7 +69,7 @@ namespace Shunting_Yard_Algorithm
                 {
                     if (IsBracket(token))
                     {
-                        isBracket = token == '('; // True if open bracket else False if closing.
+                        bool isBracket = token == '('; // Is parenthesis.
                         if (isBracket) // Open bracket.
                         {
                             stack.Push(token);
@@ -79,8 +80,7 @@ namespace Shunting_Yard_Algorithm
                             do // Repeat until '(' is found.
                             {
                                 output += stack.Pop();
-                            }
-                            while (stack.Peek() != '(');
+                            } while (stack.Peek() != '(');
                             stack.Pop();
                         }
                     }
@@ -101,20 +101,23 @@ namespace Shunting_Yard_Algorithm
                 }
             }
 
-            if (stack.Count > 0) // Append what is left on the stack in reverse order.
+            if (stack.Count <= 0)
             {
-                output += " ";
-                while (stack.Count > 0)
-                {
-                    output += stack.Pop() + " ";
-                }
+                return output;
+            }
+
+            // Append what is left on the stack in reverse order.
+            output += " ";
+            while (stack.Count > 0)
+            {
+                output += stack.Pop() + " ";
             }
             return output;
         }
 
         // Private wrapper functions.
         /// <summary>
-        /// Evaluate a simple expression using standard mathematical operators.
+        ///     Evaluate a simple expression using standard mathematical operators.
         /// </summary>
         /// <param name="i1">The first value.</param>
         /// <param name="i2">The second value.</param>
@@ -146,7 +149,7 @@ namespace Shunting_Yard_Algorithm
         }
 
         /// <summary>
-        /// Checks whether the first symbol has higher precedence over the second symbol.
+        ///     Checks whether the first symbol has higher precedence over the second symbol.
         /// </summary>
         /// <param name="c1">The first symbol.</param>
         /// <param name="c2">The second symbol.</param>
@@ -161,7 +164,7 @@ namespace Shunting_Yard_Algorithm
         }
 
         /// <summary>
-        /// Checks if a character is a round bracket.
+        ///     Checks if a character is a round bracket.
         /// </summary>
         /// <param name="c">The char value.</param>
         /// <returns>True or False.</returns>
@@ -171,17 +174,18 @@ namespace Shunting_Yard_Algorithm
         }
 
         /// <summary>
-        /// Checks if a character is a valid operator symbol.
+        ///     Checks if a character is a valid operator symbol.
         /// </summary>
         /// <param name="c">The char value.</param>
         /// <returns>True or False.</returns>
         private static bool IsOperator(char c)
         {
-            return c == '+' || c == '-' || c == 8722 || c == '*' || c == '/' || c == '^' || c == '(' || c == ')'; // Char 8722 is - but the unicode char code.
+            return c == '+' || c == '-' || c == 8722 || c == '*' || c == '/' || c == '^' || c == '(' || c == ')';
+            // Char 8722 is - but the unicode char code.
         }
 
         /// <summary>
-        /// The precedence value of a symbol.
+        ///     The precedence value of a symbol.
         /// </summary>
         /// <param name="c">The char value.</param>
         /// <returns>The precedence value.</returns>
@@ -211,7 +215,8 @@ namespace Shunting_Yard_Algorithm
         public static void Main()
         {
             // Create postfix notation (RPN) from infix notation.
-            Console.WriteLine("{0} == {1}", "3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3", ShuntingYard.Parse("3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3"));
+            Console.WriteLine("{0} == {1}", "3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3",
+                ShuntingYard.Parse("3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3"));
             Console.WriteLine("Reference: 3 4 2 * 1 5 − 2 3 ^ ^ / +");
 
             Console.WriteLine(); // A new line.
