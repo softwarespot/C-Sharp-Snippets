@@ -1,21 +1,24 @@
-﻿using System;
+﻿#region Required project assemblies
+
+using System;
+
+#endregion
 
 namespace IsPrimeNumber
 {
     internal class Program
     {
-        private static bool IsPrimeNumber(int number, out int? divisibleBy) // divisibleBy is a nullable datatype.
+        private static bool IsPrimeNumber(int number, out int divisibleBy)
         {
-            divisibleBy = null; // Set the out parameter as null, for those numbers which are prime values.
+            divisibleBy = -1; // Set the out parameter as -1, for those numbers which are prime values.
             if (number <= 1)
             {
-                divisibleBy = 1;
                 return false; // Return false if the value is less than or equal to one.
             }
 
             for (int i = 2; i <= Math.Sqrt(number); i++)
             {
-                if (number % i == 0) // If there was no remainder means it's not a prime number.
+                if (number % i == 0)
                 {
                     divisibleBy = i; // Set the out param as the divisible by value.
                     return false;
@@ -32,17 +35,23 @@ namespace IsPrimeNumber
                 Console.Write("Please enter an integer number to see if it's a prime number: ");
                 int.TryParse(Console.ReadLine(), out userChoice);
                 Console.WriteLine(); // New line.
-            }
-            while (userChoice <= 0);
+            } while (userChoice <= 0);
 
-            int? numberDivisible;
+            int numberDivisible;
             if (IsPrimeNumber(userChoice, out numberDivisible))
             {
                 Console.WriteLine("Your number is a prime value.");
             }
             else
             {
-                Console.WriteLine("Your number is NOT a prime value as it's divisible by {0}.", numberDivisible);
+                if (numberDivisible == -1)
+                {
+                    Console.WriteLine("Your number is NOT regarded as a prime value.");
+                }
+                else
+                {
+                    Console.WriteLine("Your number is NOT a prime value as it's divisible by {0}.", numberDivisible);
+                }
             }
             Console.WriteLine(); // New line.
 

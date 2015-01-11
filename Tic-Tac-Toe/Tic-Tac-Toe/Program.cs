@@ -36,7 +36,7 @@ namespace Tic_Tac_Toe
 			};
 
             bool? isWin = null;
-            List<int> randomSequence = Enumerable.Range(1, 9).OrderBy(element => Guid.NewGuid()).Take(9).ToList<int>(); // Create a List of randomly sorted integers between 1 and 9.
+            List<int> randomSequence = Enumerable.Range(1, 9).OrderBy(element => Guid.NewGuid()).Take(9).ToList(); // Create a List of randomly sorted integers between 1 and 9.
             while (randomSequence.Count != 0 && isWin == null)
             {
                 Console.WriteLine("Please enter a choice from 1 - 9.");
@@ -52,17 +52,19 @@ namespace Tic_Tac_Toe
                 Print(ref table);
                 isWin = IsWin(ref table, userValue, computerValue);
                 if (isWin != null)
+                {
                     break;
+                }
 
                 bool isComputer = false;
                 int[] squareRange = Enumerable.Range(0, computerLogic[table[_userChoice], _logicCount] - 1).OrderBy(element => Guid.NewGuid()).Take(computerLogic[table[_userChoice], _logicCount]).ToArray();
-                for (int i = 0; i < squareRange.Length; i++)
+                foreach (int square in squareRange)
                 {
-                    isComputer = table[computerLogic[table[_userChoice], squareRange[i]]] == emptyValue && randomSequence.Count > 0;
+                    isComputer = table[computerLogic[table[_userChoice], square]] == emptyValue && randomSequence.Count > 0;
                     if (isComputer)
                     {
-                        randomSequence.RemoveAt(squareRange[i]); // Remove item from the random sequence.
-                        table[computerLogic[table[_userChoice], squareRange[i]]] = computerValue; // Add as being taken by the computer.
+                        randomSequence.RemoveAt(square); // Remove item from the random sequence.
+                        table[computerLogic[table[_userChoice], square]] = computerValue; // Add as being taken by the computer.
                         break;
                     }
                 }

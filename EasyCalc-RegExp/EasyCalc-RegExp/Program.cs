@@ -1,5 +1,10 @@
-﻿using System;
+﻿#region Required project assemblies
+
+using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
+
+#endregion
 
 namespace EasyCalc_RegExp
 {
@@ -20,11 +25,12 @@ namespace EasyCalc_RegExp
         {
             while (true)
             {
-                Console.Write("=========================================\n|\t\t\t\t\t|\n|\tEasyCalc\t\t\t|\n|\t\t\t\t\t|\n|\tAuthor: SoftwareSpot (C) 2014\t|\n|\tBuild: 0.0.0.1\t\t\t|\n|\t\t\t\t\t|\n=========================================\nPlease enter an expression to evaluate e.g. 1+2= or 10*20 (the equals sign is optional).\n");
+                Console.Write(
+                    "=========================================\n|\t\t\t\t\t|\n|\tEasyCalc\t\t\t|\n|\t\t\t\t\t|\n|\tAuthor: SoftwareSpot (C) 2014\t|\n|\tBuild: 0.0.0.1\t\t\t|\n|\t\t\t\t\t|\n=========================================\nPlease enter an expression to evaluate e.g. 1+2= or 10*20 (the equals sign is optional).\n");
 
                 string userChoice = Console.ReadLine();
                 // Nested ternary statements. It's difficult to read, but this is how the application only spans 2 lines.
-                Console.WriteLine(Regex.IsMatch(userChoice, @"^\d+(?:\.\d+)?\s*[+\-*\/]\s*\d+(?:\.\d+)?\s*=?$") ? "The sum of " + userChoice.TrimEnd('=').Replace(" ", string.Empty) + " is " + ((Regex.Replace(userChoice, @"^\d+(?:\.\d+)?\s*([+\-*\/])\s*\d+(?:\.\d+)?\s*=?$", @"$1") == "+") ? (double.Parse(Regex.Replace(userChoice, @"^(\d+(?:\.\d+)?)\s*[+\-*\/]\s*\d+(?:\.\d+)?\s*=?$", @"$1")) + double.Parse(Regex.Replace(userChoice, @"^\d+(?:\.\d+)?\s*[+\-*\/]\s*(\d+(?:\.\d+)?)\s*=?$", @"$1"))).ToString() : (Regex.Replace(userChoice, @"^\d+(?:\.\d+)?\s*([+\-*\/])\s*\d+(?:\.\d+)?\s*=?$", @"$1") == "-") ? (double.Parse(Regex.Replace(userChoice, @"^(\d+(?:\.\d+)?)\s*[+\-*\/]\s*\d+(?:\.\d+)?\s*=?$", @"$1")) - double.Parse(Regex.Replace(userChoice, @"^\d+(?:\.\d+)?\s*[+\-*\/]\s*(\d+(?:\.\d+)?)\s*=?$", @"$1"))).ToString() : (Regex.Replace(userChoice, @"^\d+(?:\.\d+)?\s*([+\-*\/])\s*\d+(?:\.\d+)?\s*=?$", @"$1") == "*") ? (double.Parse(Regex.Replace(userChoice, @"^(\d+(?:\.\d+)?)\s*[+\-*\/]\s*\d+(?:\.\d+)?\s*=?$", @"$1")) * double.Parse(Regex.Replace(userChoice, @"^\d+(?:\.\d+)?\s*[+\-*\/]\s*(\d+(?:\.\d+)?)\s*=?$", @"$1"))).ToString() : (Regex.Replace(userChoice, @"^\d+(?:\.\d+)?\s*([+\-*\/])\s*\d+(?:\.\d+)?\s*=?$", @"$1") == "/") ? (double.Parse(Regex.Replace(userChoice, @"^(\d+(?:\.\d+)?)\s*[+\-*\/]\s*\d+(?:\.\d+)?\s*=?$", @"$1")) / double.Parse(Regex.Replace(userChoice, @"^\d+(?:\.\d+)?\s*[+\-*\/]\s*(\d+(?:\.\d+)?)\s*=?$", @"$1"))).ToString() : "A serious error occurred parsing your expression.") : "A serious error occurred parsing your expression.");
+                Console.WriteLine(userChoice != null && Regex.IsMatch(userChoice, @"^\d+(?:\.\d+)?\s*[+\-*\/]\s*\d+(?:\.\d+)?\s*=?$") ? "The sum of " + userChoice.TrimEnd('=').Replace(" ", String.Empty) + " is " + ((Regex.Replace(userChoice, @"^\d+(?:\.\d+)?\s*([+\-*\/])\s*\d+(?:\.\d+)?\s*=?$", @"$1") == "+") ? (double.Parse(Regex.Replace(userChoice, @"^(\d+(?:\.\d+)?)\s*[+\-*\/]\s*\d+(?:\.\d+)?\s*=?$", @"$1")) + double.Parse(Regex.Replace(userChoice, @"^\d+(?:\.\d+)?\s*[+\-*\/]\s*(\d+(?:\.\d+)?)\s*=?$", @"$1"))).ToString(CultureInfo.InvariantCulture) : (Regex.Replace(userChoice, @"^\d+(?:\.\d+)?\s*([+\-*\/])\s*\d+(?:\.\d+)?\s*=?$", @"$1") == "-") ? (double.Parse(Regex.Replace(userChoice, @"^(\d+(?:\.\d+)?)\s*[+\-*\/]\s*\d+(?:\.\d+)?\s*=?$", @"$1")) - double.Parse(Regex.Replace(userChoice, @"^\d+(?:\.\d+)?\s*[+\-*\/]\s*(\d+(?:\.\d+)?)\s*=?$", @"$1"))).ToString(CultureInfo.InvariantCulture) : (Regex.Replace(userChoice, @"^\d+(?:\.\d+)?\s*([+\-*\/])\s*\d+(?:\.\d+)?\s*=?$", @"$1") == "*") ? (double.Parse(Regex.Replace(userChoice, @"^(\d+(?:\.\d+)?)\s*[+\-*\/]\s*\d+(?:\.\d+)?\s*=?$", @"$1")) * double.Parse(Regex.Replace(userChoice, @"^\d+(?:\.\d+)?\s*[+\-*\/]\s*(\d+(?:\.\d+)?)\s*=?$", @"$1"))).ToString(CultureInfo.InvariantCulture) : (Regex.Replace(userChoice, @"^\d+(?:\.\d+)?\s*([+\-*\/])\s*\d+(?:\.\d+)?\s*=?$", @"$1") == "/") ? (double.Parse(Regex.Replace(userChoice, @"^(\d+(?:\.\d+)?)\s*[+\-*\/]\s*\d+(?:\.\d+)?\s*=?$", @"$1")) / double.Parse(Regex.Replace(userChoice, @"^\d+(?:\.\d+)?\s*[+\-*\/]\s*(\d+(?:\.\d+)?)\s*=?$", @"$1"))).ToString(CultureInfo.InvariantCulture) : "A serious error occurred parsing your expression.") : "A serious error occurred parsing your expression.");
             }
         }
     }
