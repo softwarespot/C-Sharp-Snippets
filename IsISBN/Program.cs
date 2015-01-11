@@ -37,13 +37,12 @@ namespace IsISBN
             }
 
             int length = isbn.Length - 1;
-            const int nine = 57, zero = 48;
             int counter, sum = 0;
             switch (type)
             {
                 case ISBN.Ten:
                     {
-                        if (isbn[length] == 88 || isbn[length] == 120)
+                        if (isbn[length] == 'x' || isbn[length] == 'X')
                         {
                             length -= 1;
                             sum = 10;
@@ -52,11 +51,11 @@ namespace IsISBN
                         counter = 10;
                         for (int i = 0; i <= length; i++)
                         {
-                            if (isbn[i] < zero || isbn[i] > nine)
+                            if (isbn[i] < '0' || isbn[i] > '9')
                             {
                                 continue;
                             }
-                            sum += (isbn[i] - zero) * counter;
+                            sum += (isbn[i] - '0') * counter;
                             counter -= 1;
                         }
                         return sum % 11 == 0; // Divisible by 11.
@@ -67,11 +66,11 @@ namespace IsISBN
                         counter = one;
                         for (int i = 0; i <= length; i++)
                         {
-                            if (isbn[i] < zero || isbn[i] > nine)
+                            if (isbn[i] < '0' || isbn[i] > '9')
                             {
                                 continue;
                             }
-                            sum += (isbn[i] - zero) * counter;
+                            sum += (isbn[i] - '0') * counter;
                             counter = (counter == one) ? three : one;
                         }
                         return sum % 10 == 0; // Divisible by 10.
