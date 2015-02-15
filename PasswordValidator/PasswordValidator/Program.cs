@@ -54,43 +54,42 @@ namespace Password // Password namespace.
 
         public Errors Validate(string password) // Validate Method().
         {
-            byte isValid = 1;
-            bool hasConsecutive = false,
-                hasSpace = false,
-                isInts = false,
-                isLength = false,
-                isLowerCase = false,
-                isSpecial = false,
-                isUpperCase = false;
+            const byte invalidProperty = 0, validProperty = 1;
+
+            bool hasConsecutive = false, hasSpace = false,
+                isInts = false, isLength = false, isLowerCase = false, isSpecial = false, isUpperCase = false;
+
+            byte isValidPassword = validProperty;
+            Func<byte, bool, byte> IsValid = (isValid, hasProperty) => (byte)(isValid * (hasProperty ? invalidProperty : validProperty)); // Lambda method.
 
             if (!AllowConsecutive) // Check if characters are consecutive e.g. password, where "aa" is invalid.
             {
-                isValid = (byte)(isValid * (Regex.IsMatch(password, @"(.)\1") ? 0 : 1));
-                hasConsecutive = (isValid == 0);
+                hasConsecutive = Regex.IsMatch(password, @"(.)\1");
+                isValidPassword = IsValid(isValidPassword, hasConsecutive);
             }
 
             if (!AllowSpace) // Check if whitespace is found.
             {
                 hasSpace = Regex.IsMatch(password, @"\s");
-                isValid = (byte)(isValid * (hasSpace ? 0 : 1));
+                isValidPassword = IsValid(isValidPassword, hasSpace);
             }
 
             if (Ints > 0) // Check if the minimum number of integers is honoured.
             {
                 isInts = Regex.Split(password, @"\d").Length - 1 < Ints;
-                isValid = (byte)(isValid * (isInts ? 0 : 1));
+                isValidPassword = IsValid(isValidPassword, isInts);
             }
 
             if (Length > 0) // Check if the password length is honoured.
             {
                 isLength = Regex.Split(password, @"\S").Length - 1 < Length;
-                isValid = (byte)(isValid * (isLength ? 0 : 1));
+                isValidPassword = IsValid(isValidPassword, isLength);
             }
 
             if (LowerCase > 0) // Check if the minimum number of lowercase characters is honoured.
             {
                 isLowerCase = Regex.Split(password, @"[a-z]").Length - 1 < LowerCase;
-                isValid = (byte)(isValid * (isLowerCase ? 0 : 1));
+                isValidPassword = IsValid(isValidPassword, isLowerCase);
             }
 
             /*
@@ -99,17 +98,16 @@ namespace Password // Password namespace.
             if (Special > 0) // Check if the minimum number of special characters is honoured.
             {
                 isSpecial = Regex.Split(password, @"[><^|=~`$+\p{P}]").Length < Special;
-                isValid = (byte)(isValid * (isSpecial ? 0 : 1));
+                isValidPassword = IsValid(isValidPassword, isSpecial);
             }
 
             if (UpperCase > 0)
             {
                 isUpperCase = Regex.Split(password, @"[A-Z]").Length < UpperCase;
-                isValid = (byte)(isValid * (isUpperCase ? 0 : 1));
+                isValidPassword = IsValid(isValidPassword, isUpperCase);
             }
 
-            return new Errors(isValid > 0, hasConsecutive, hasSpace, isInts, isLength, isLowerCase, isSpecial,
-                isUpperCase);
+            return new Errors(isValidPassword > 0, hasConsecutive, hasSpace, isInts, isLength, isLowerCase, isSpecial, isUpperCase);
         }
     }
 }
@@ -142,7 +140,7 @@ namespace PasswordValidator
             {
                 Console.Write("Password: ");
                 string password = Console.ReadLine(); // Variable to hold the password string.
-                if (password != "-1")
+                if (password == "-1")
                 {
                     break;
                 }
