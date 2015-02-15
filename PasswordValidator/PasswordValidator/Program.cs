@@ -40,8 +40,6 @@ namespace Password // Password namespace.
             UpperCase = 0;
         }
 
-        // No DeConstructor is required in this class.
-
         public bool AllowConsecutive { get; set; }
         // Properties. This is alot cleaner than public int isConsecutive; as it doesn't display the variable names to the end user.
 
@@ -53,10 +51,10 @@ namespace Password // Password namespace.
         public int LowerCase { get; set; }
         public int Special { get; set; }
         public int UpperCase { get; set; }
-        // ReSharper disable once FunctionComplexityOverflow
+
         public Errors Validate(string password) // Validate Method().
         {
-            int isValid = 1;
+            byte isValid = 1;
             bool hasConsecutive = false,
                 hasSpace = false,
                 isInts = false,
@@ -64,34 +62,35 @@ namespace Password // Password namespace.
                 isLowerCase = false,
                 isSpecial = false,
                 isUpperCase = false;
+
             if (!AllowConsecutive) // Check if characters are consecutive e.g. password, where "aa" is invalid.
             {
-                isValid = isValid * (Regex.IsMatch(password, @"(.)\1") ? 0 : 1);
+                isValid = (byte)(isValid * (Regex.IsMatch(password, @"(.)\1") ? 0 : 1));
                 hasConsecutive = (isValid == 0);
             }
 
             if (!AllowSpace) // Check if whitespace is found.
             {
                 hasSpace = Regex.IsMatch(password, @"\s");
-                isValid = isValid * (hasSpace ? 0 : 1);
+                isValid = (byte)(isValid * (hasSpace ? 0 : 1));
             }
 
             if (Ints > 0) // Check if the minimum number of integers is honoured.
             {
                 isInts = Regex.Split(password, @"\d").Length - 1 < Ints;
-                isValid = isValid * (isInts ? 0 : 1);
+                isValid = (byte)(isValid * (isInts ? 0 : 1));
             }
 
             if (Length > 0) // Check if the password length is honoured.
             {
                 isLength = Regex.Split(password, @"\S").Length - 1 < Length;
-                isValid = isValid * (isLength ? 0 : 1);
+                isValid = (byte)(isValid * (isLength ? 0 : 1));
             }
 
             if (LowerCase > 0) // Check if the minimum number of lowercase characters is honoured.
             {
                 isLowerCase = Regex.Split(password, @"[a-z]").Length - 1 < LowerCase;
-                isValid = isValid * (isLowerCase ? 0 : 1);
+                isValid = (byte)(isValid * (isLowerCase ? 0 : 1));
             }
 
             /*
@@ -100,13 +99,13 @@ namespace Password // Password namespace.
             if (Special > 0) // Check if the minimum number of special characters is honoured.
             {
                 isSpecial = Regex.Split(password, @"[><^|=~`$+\p{P}]").Length < Special;
-                isValid = isValid * (isSpecial ? 0 : 1);
+                isValid = (byte)(isValid * (isSpecial ? 0 : 1));
             }
 
             if (UpperCase > 0)
             {
                 isUpperCase = Regex.Split(password, @"[A-Z]").Length < UpperCase;
-                isValid = isValid * (isUpperCase ? 0 : 1);
+                isValid = (byte)(isValid * (isUpperCase ? 0 : 1));
             }
 
             return new Errors(isValid > 0, hasConsecutive, hasSpace, isInts, isLength, isLowerCase, isSpecial,
@@ -122,7 +121,7 @@ namespace PasswordValidator
         private static void Main()
         {
             // Create a PasswordValid object.
-            Valid password1 = new Valid
+            Valid passwordValid = new Valid
             {
                 Ints = 2, // Must contain 2 integers.
                 Length = 6, // Must contain a minimum of 6 characters.
@@ -139,17 +138,21 @@ namespace PasswordValidator
             Console.WriteLine("|                                                                         |");
             Console.WriteLine("***************************************************************************");
 
-            string password = ""; // Variable to hold the password string..
-            while (password != null && password.ToLower() != "-1")
+            while (true)
             {
                 Console.Write("Password: ");
-                password = Console.ReadLine();
-                Errors password1_Errors = password1.Validate(password);
-                // Declare a variable to hold the password error results.
-                Console.WriteLine("The following password : {0} returned {1}", password, password1_Errors.IsValid);
-                // Returns true or false.
+                string password = Console.ReadLine(); // Variable to hold the password string.
+                if (password != "-1")
+                {
+                    break;
+                }
 
-                PrintErrorResults(password1_Errors); // Print additional error results for the PasswordValid object.
+                // Declare a variable to hold the password error results.
+                Errors passwordErrors = passwordValid.Validate(password);
+                Console.WriteLine("The following password : {0} returned {1}", password, passwordErrors.IsValid);
+
+                // Returns true or false.
+                PrintError(passwordErrors); // Print additional error results for the PasswordValid object.
             }
 
             Console.WriteLine(); // Empty line.
@@ -158,25 +161,41 @@ namespace PasswordValidator
             Console.ReadKey(true);
         }
 
-        private static void PrintErrorResults(Errors passwordResults)
+        private static void PrintError(Errors passwordResults)
         {
             Console.WriteLine(); // Empty line.
             if (passwordResults.IsValid)
+            {
                 return; // Return if the IsValid property is true as this indicated no error was created.
+            }
             if (passwordResults.HasConsecutive)
+            {
                 Console.WriteLine("The password contained repeating characters e.g. S in Password.");
+            }
             if (passwordResults.HasSpace)
+            {
                 Console.WriteLine("The password contained space(s).");
+            }
             if (passwordResults.IsInts)
+            {
                 Console.WriteLine("The password didn't contain the minimum number of digits.");
+            }
             if (passwordResults.IsLength)
+            {
                 Console.WriteLine("The password didn't match the minimum length.");
+            }
             if (passwordResults.IsLowerCase)
+            {
                 Console.WriteLine("The password didn't contain the minimum number of lowercase characters.");
+            }
             if (passwordResults.IsSpecial)
+            {
                 Console.WriteLine("The password didn't contain the minimum number of special characters.");
+            }
             if (passwordResults.IsUpperCase)
+            {
                 Console.WriteLine("The password didn't contain the minimum number of uppercase characters.");
+            }
             Console.WriteLine(); // Empty line.
         }
     }
