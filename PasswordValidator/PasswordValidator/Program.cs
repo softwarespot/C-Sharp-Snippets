@@ -99,7 +99,7 @@ namespace Password // Password namespace.
              */
             if (Special > 0) // Check if the minimum number of special characters is honoured.
             {
-                isSpecial = Regex.Split(password, @"[\p{P}]").Length < Special;
+                isSpecial = Regex.Split(password, @"[><^|=~`$+\p{P}]").Length < Special;
                 isValid = isValid * (isSpecial ? 0 : 1);
             }
 
