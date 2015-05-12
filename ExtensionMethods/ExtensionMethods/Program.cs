@@ -259,7 +259,7 @@ namespace Example
 
             Console.WriteLine("Is Hex: {0}", "FF00FF".IsHex());
 
-            string myString = string.Empty;
+            string myString = String.Empty;
             Console.WriteLine(myString.IsTrue());
 
             double myOdd = 2.21;
