@@ -33,7 +33,7 @@ namespace IsPrimeNumber
             do
             {
                 Console.Write("Please enter an integer number to see if it's a prime number: ");
-                int.TryParse(Console.ReadLine(), out userChoice);
+                Int32.TryParse(Console.ReadLine(), out userChoice);
                 Console.WriteLine(); // New line.
             } while (userChoice <= 0);
 
