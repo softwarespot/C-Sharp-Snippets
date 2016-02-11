@@ -58,7 +58,7 @@ namespace Shunting_Yard_Algorithm_NoStackClass
 
             int buffer = expression.Length; // Create stack that can hold all characters.
             var stack = new char[buffer]; // Create a stack to push/pop to.
-            int index = 0; // index item of the stack. 
+            int index = 0; // index item of the stack.
 
             for (int i = 0; i < buffer; i++)
             {
